@@ -1,0 +1,100 @@
+syntax = "proto3";
+package chat;
+option go_package = "/Users/rambo/Documents/MockDIs/MOCKDISYS/chat";
+ 
+message User{
+    int64 id = 1;
+    string name = 2;
+}
+
+message Message{
+    User user = 1;
+    uint32 timestamp = 2;
+}
+
+message ResultMessage{
+    int32 amount = 1;
+    User user = 2;
+    uint32 timestamp = 3;
+    bool stillActive = 4;
+}
+
+//Returntype = 1 for success, 2 for fail, 3 for exception
+message BidReply{
+    int32 returnType = 1;
+    uint32 timestamp = 2;
+}
+
+message BidMessage{
+    int32 amount = 1;
+    User user = 2;
+    uint32 timestamp = 3;
+}
+
+message ReplicateMessage{
+    int32 amount = 1;
+    User user = 2;
+    uint32 timestamp = 3;
+}
+
+message TimeMessage{
+    string auctionStart = 1;
+    int32 duration = 2;
+}
+
+message Connect{
+    User user = 1;
+    bool active = 2;
+}
+
+message Void{}
+
+message ElectionPorts{
+    repeated int32 listOfPorts = 1;
+}
+
+message PortsAndClocks{
+    repeated int32 listOfPorts = 1;
+    repeated uint32 listOfClocks = 2;
+}
+
+message CutOfMessage{
+    int32 port = 1;
+}
+
+message PortIndex{
+    int32 index = 1;
+}
+
+message RequestMessage{
+    int32 serverId = 1;
+    int32 timestamp = 2;
+    int32 port = 3;
+}
+
+message ReplyMessage{
+    int32 serverId = 1;
+    int32 timestamp = 2;
+    int32 port = 3;
+}
+
+service AuctionHouse{
+    rpc OpenConnection(Connect) returns (stream Message){}
+    rpc CloseConnection(Message) returns (Void){}
+    rpc Bid(BidMessage) returns (BidReply){}
+    rpc Result(Void) returns (ResultMessage){}
+    rpc Broadcast(Message) returns (Void){}
+    rpc Replicate(ReplicateMessage) returns (BidReply){}
+    rpc getID(Void) returns (PortIndex){}
+    rpc RegisterPulse(Message) returns (Void){}
+    rpc RingElection(PortsAndClocks) returns (Void){}
+    rpc SelectNewLeader(Void) returns (ElectionPorts){}
+    rpc BroadcastNewLeader(ElectionPorts) returns (Void){}
+    rpc CutOfReplicate(CutOfMessage) returns (Void){}
+    rpc PromptTimeAndDuration(Void) returns (TimeMessage){}
+    
+    //Ricart And Agrawala
+    rpc AccessCritical(RequestMessage) returns(ReplyMessage){}
+    rpc ReceiveRequest(RequestMessage) returns(Void){}
+    rpc ReceiveReply(ReplyMessage) returns(Void){}
+}
