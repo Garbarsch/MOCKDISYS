@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Akongstad/AuctionHouse/Auction"
+	"github.com/Garbarsch/MOCKDISYS/Auction"
 	"google.golang.org/grpc"
 )
 
