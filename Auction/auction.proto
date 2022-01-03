@@ -1,6 +1,6 @@
 syntax = "proto3";
-package chat;
-option go_package = "/Users/rambo/Documents/MockDIs/MOCKDISYS/chat";
+package Auction;
+option go_package = "github.com/Garbarsch/MOCKDISYS/Auction";
  
 message User{
     int64 id = 1;
