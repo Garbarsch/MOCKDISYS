@@ -13,6 +13,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/Garbarsch/MOCKDISYS/Auction"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/connectivity"
 )
